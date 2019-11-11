@@ -22,29 +22,34 @@ public class StartActivity extends AppCompatActivity {
 
     public void Chat(View view) {
         Intent intent=new Intent(this,ChatActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,10);
     }
 
     public void Gallery(View view) {
-        Intent intent=new Intent(this,GalleryActivity.class);
-        startActivity(intent);
+        Intent intent=new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");// '*' 모든 확장자
+        startActivityForResult(intent,10);
     }
 
     public void API(View view) {
         Intent intent=new Intent(this,ApiActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,10);
     }
 
     public void Img(View view) {
+
     }
 
     public void User(View view) {
+
     }
 
     public void A(View view) {
+
     }
 
     public void aProfile(View view) {
+
     }
 
     public void myProfile(View view) {

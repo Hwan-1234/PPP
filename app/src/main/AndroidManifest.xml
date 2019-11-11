@@ -14,7 +14,6 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".ApiActivity"></activity>
         <activity android:name=".HttpActivity" />
-        <activity android:name=".GalleryActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".StartActivity" />
         <activity android:name=".MainActivity">
