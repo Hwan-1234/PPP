@@ -8,6 +8,61 @@
     android:padding="16dp"
     tools:context=".StartActivity">
 
+    <ImageButton
+        android:id="@+id/id"
+        android:onClick="clickImg"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id"
+        android:background="@drawable/roundedbutton"
+        android:layout_marginTop="8dp"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/roundedbutton"
+        android:layout_marginTop="8dp"/>
+    <LinearLayout
+        android:id="@+id/Lr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+        <Button
+            android:id="@+id/btn1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickMain"
+            android:text="메인"/>
+        <Button
+            android:id="@+id/btn2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickChat"
+            android:text="채팅"/>
+        <Button
+            android:id="@+id/btn3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickGallery"
+            android:text="갤러리"/>
+
+        <Button
+            android:id="@+id/btn4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="clickAPI"
+            android:text="뉴스?" />
+    </LinearLayout>
 
 
 </RelativeLayout>
