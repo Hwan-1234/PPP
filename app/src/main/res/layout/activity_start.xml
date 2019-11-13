@@ -15,20 +15,17 @@
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:clickable="true"
+        android:scaleType="centerInside"
         />
-    <ImageButton
+    <Button
+        android:id="@+id/user"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:layout_below="@id/id"
         android:layout_marginTop="8dp"
-        android:onClick="User"/>
-    <ImageButton
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_below="@id/id"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="8dp"
-        android:onClick="A"/>
+        android:onClick="User"
+        android:text="정보수정"
+        />
     <LinearLayout
         android:id="@+id/Lr"
         android:layout_width="match_parent"
@@ -57,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="API"
-            android:text="뉴스?" />
+            android:text="API"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -68,12 +65,12 @@
         android:background="#44eeeeee"
         android:layout_centerHorizontal="true"
         >
-        <ImageButton
-            android:id="@+id/myid"
+        <ImageView
+            android:id="@+id/myiv"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:background="#33000000"
-            android:onClick="myProfile"/>
+            android:background="@drawable/roundedbutton"
+            />
         <TextView
             android:id="@+id/tvmy"
             android:layout_width="wrap_content"
@@ -93,12 +90,11 @@
             android:layout_height="wrap_content"
             android:text="A"
             android:paddingRight="8dp"/>
-        <ImageButton
-            android:id="@+id/aid"
+        <ImageView
+            android:id="@+id/aiv"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:background="@drawable/roundedbutton"
-            android:onClick="aProfile"
             />
     </LinearLayout>
 

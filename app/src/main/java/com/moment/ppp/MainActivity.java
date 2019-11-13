@@ -132,9 +132,14 @@ public class MainActivity extends AppCompatActivity {
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
+
         if(isValidEmail() && isValidPasswd()) {
             loginUser(email, password);
+            H.name=email;
         }
+        Intent intent=new Intent(this,StartActivity.class);
+        startActivity(intent);
+        finish();
     }
     private boolean isValidEmail() {
         if (email.isEmpty()) {

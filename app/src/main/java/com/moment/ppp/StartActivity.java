@@ -1,11 +1,11 @@
 package com.moment.ppp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,23 +13,33 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.InputStream;
 
 
 public class StartActivity extends AppCompatActivity {
 
-    Button chat,gallery,api,user,a;
-    ImageButton id,myid,aid;
+    Button chat,gallery,api,user;
+    ImageButton id;
     TextView tvmy,tva,tvday;
+    ImageView myiv,aiv;
+    boolean isFirst = true;//앱 처음 실행?
+    boolean isChanged = false;//프로필 업데이트 한 적 있?
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         id=findViewById(R.id.id);
-
+        user=findViewById(R.id.user);
+        loadData();
         id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +57,8 @@ public class StartActivity extends AppCompatActivity {
                 }
             }
         });
+        loadData();
+
 
     }    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -73,6 +85,7 @@ public class StartActivity extends AppCompatActivity {
     public void Chat(View view) {
         Intent intent=new Intent(this,ChatActivity.class);
         startActivityForResult(intent,10);
+
     }
 
     public void Gallery(View view) {
@@ -82,6 +95,7 @@ public class StartActivity extends AppCompatActivity {
     public void API(View view) {
         Intent intent=new Intent(this,ApiActivity.class);
         startActivityForResult(intent,10);
+
     }
 
     public void Img(View view) {
@@ -95,20 +109,20 @@ public class StartActivity extends AppCompatActivity {
 
 
     public void User(View view) {
+        Intent intent = new Intent(this,NameActivity.class);
+        startActivityForResult(intent,10);
+
+
+    }
+    //내 phone 에 저장되어 있는 프로필정보 읽어오기
+    public void loadData() {
+        SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
+        H.name = preferences.getString("name", null);
+        H.profileUrl = preferences.getString("profileUrl", null);
 
     }
 
-    public void A(View view) {
 
-    }
-
-    public void aProfile(View view) {
-
-    }
-
-    public void myProfile(View view) {
-
-    }
 }
 
 

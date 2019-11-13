@@ -3,8 +3,8 @@
     package="com.moment.ppp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ApiActivity"></activity>
+        <activity android:name=".NameActivity"></activity>
+        <activity android:name=".ApiActivity" />
         <activity android:name=".HttpActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".StartActivity" />
