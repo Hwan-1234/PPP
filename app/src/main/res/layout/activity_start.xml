@@ -14,6 +14,7 @@
         android:onClick="Img"
         android:layout_width="match_parent"
         android:layout_height="500dp"
+        android:clickable="true"
         />
     <ImageButton
         android:layout_width="100dp"
