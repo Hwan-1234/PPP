@@ -1,16 +1,24 @@
 package com.moment.ppp;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,20 +34,35 @@ public class NameActivity extends AppCompatActivity {
     public EditText et_name,et_profileMsg,et_yyhhmm;
     public StorageReference imgRef;
     public Uri imgUri;
+    TextView tvmy;
+    ImageView myiv;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name);
-
+        tvmy=findViewById(R.id.tvmy);
+        myiv=findViewById(R.id.myiv);
         iv=findViewById(R.id.iv);
         et_name=findViewById(R.id.et_name);
         et_profileMsg=findViewById(R.id.et_ProfileMsg);
         et_yyhhmm=findViewById(R.id.et_yyhhmm);
 
 
+        //동적퍼미션 작업
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            int permissionResult= checkSelfPermission(Manifest.permission.ACCESS_MEDIA_LOCATION);
+            if(permissionResult== PackageManager.PERMISSION_DENIED){
+                String[] permissions= new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permissions, 10);
+            }else{
+                iv.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     public void profileSave(View view) {
+        myiv=H.Profileiv;
         saveData();
         loadData();
         start();
@@ -104,5 +127,24 @@ public void saveData(){
     });
 
 }
+
+    public void Img(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_PICK);
+
+        startActivityForResult(intent, H.REQUEST_CODE);
+        int permissionCheck = ContextCompat.checkSelfPermission(NameActivity.this, Manifest.permission.WRITE_CALENDAR);
+
+        if(permissionCheck== PackageManager.PERMISSION_DENIED){
+
+            // 권한 없음
+        }else{
+            // 권한 있음
+        }
+    ///TODO
+        //이미지 설정
+    }
+
 
 }

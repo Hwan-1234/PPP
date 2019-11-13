@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -25,7 +26,7 @@ import java.io.InputStream;
 
 
 public class StartActivity extends AppCompatActivity {
-
+    Context context;
     Button chat,gallery,api,user;
     ImageButton id;
     TextView tvmy,tva,tvday;
@@ -45,7 +46,7 @@ public class StartActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setAction(Intent.ACTION_PICK);
                 startActivityForResult(intent, H.REQUEST_CODE);
                 int permissionCheck = ContextCompat.checkSelfPermission(StartActivity.this, Manifest.permission.WRITE_CALENDAR);
 
@@ -79,6 +80,7 @@ public class StartActivity extends AppCompatActivity {
                 Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
             }
         }
+
     }
 
 
