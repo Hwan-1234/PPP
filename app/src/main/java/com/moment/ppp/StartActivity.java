@@ -10,7 +10,9 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -27,6 +29,7 @@ import java.io.InputStream;
 
 public class StartActivity extends AppCompatActivity {
     Context context;
+    static final int PICK_CONTACT_REQUEST = 1;
     Button chat,gallery,api,user;
     ImageButton id;
     TextView tvmy,tva,tvday;
@@ -40,6 +43,7 @@ public class StartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_start);
         id=findViewById(R.id.id);
         user=findViewById(R.id.user);
+        myiv=findViewById(R.id.myiv);
         loadData();
         id.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +62,6 @@ public class StartActivity extends AppCompatActivity {
                 }
             }
         });
-        loadData();
 
 
     }    @Override
@@ -111,6 +114,7 @@ public class StartActivity extends AppCompatActivity {
 
 
     public void User(View view) {
+
         Intent intent = new Intent(this,NameActivity.class);
         startActivityForResult(intent,10);
 
@@ -121,6 +125,7 @@ public class StartActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
         H.name = preferences.getString("name", null);
         H.profileUrl = preferences.getString("profileUrl", null);
+
 
     }
 

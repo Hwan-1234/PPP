@@ -1,24 +1,26 @@
 package com.moment.ppp;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,8 +28,11 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import static com.moment.ppp.StartActivity.PICK_CONTACT_REQUEST;
 
 public class NameActivity extends AppCompatActivity {
     public ImageView iv;
@@ -118,13 +123,15 @@ public void saveData(){
 
                     editor.putString("name", H.name);
                     editor.putString("profileUrl", H.profileUrl);
+                    editor.putString("yyhhmm",H.yyhhmm);
                     editor.commit();
 
-
+                Img(H.Profileiv);
                 }
             });
         }
     });
+
 
 }
 
@@ -142,9 +149,33 @@ public void saveData(){
         }else{
             // 권한 있음
         }
-    ///TODO
-        //이미지 설정
+
+//        //이미지 설정
+        Intent result = new Intent("com.example.RESULT_ACTION", Uri.parse("content://result_uri"));
+        setResult(Activity.RESULT_OK, result);
+        finish();
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == H.REQUEST_CODE) {
+//            if (resultCode == RESULT_OK) {
+//                try {
+//                    InputStream in = getContentResolver().openInputStream(data.getData());
+//
+//                    Bitmap img = BitmapFactory.decodeStream(in);
+//                    in.close();
+//
+//                    iv.setImageBitmap(img);
+//                } catch (Exception e) {
+//
+//                }
+//            } else if (resultCode == RESULT_CANCELED) {
+//                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
+//            }
+//        }
+
+//    }
 
 }
