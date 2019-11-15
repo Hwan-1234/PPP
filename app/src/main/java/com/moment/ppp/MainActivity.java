@@ -195,6 +195,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+        H.emailName=email;
+        H.password=password;
     }
     private void LoginSuccess(){
         if (success=true){
@@ -202,4 +204,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
+
 }

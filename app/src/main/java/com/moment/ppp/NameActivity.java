@@ -1,16 +1,20 @@
 package com.moment.ppp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.loader.content.CursorLoader;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -25,6 +29,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.error.VolleyError;
+import com.android.volley.request.SimpleMultiPartRequest;
+import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -40,40 +51,36 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.moment.ppp.H.REQUEST_CODE;
+import static com.moment.ppp.H.profileUrl;
 
 public class NameActivity extends AppCompatActivity {
     public ImageView iv;
-    public EditText et_name,et_profileMsg,et_yyhhmm;
-    public StorageReference imgRef;
-    public Uri imgUri;
-    TextView tvmy;
-    ImageView myiv;
-    Context context;
+    public EditText et_name, et_profileMsg, et_yyhhmm;
+    Uri img;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_name);
-        tvmy=findViewById(R.id.tvmy);
-        myiv=findViewById(R.id.myiv);
-        iv=findViewById(R.id.iv);
-        et_name=findViewById(R.id.et_name);
-        et_profileMsg=findViewById(R.id.et_ProfileMsg);
-        et_yyhhmm=findViewById(R.id.et_yyhhmm);
+        iv = findViewById(R.id.iv);
+        et_name = findViewById(R.id.et_name);
+        et_profileMsg = findViewById(R.id.et_ProfileMsg);
+        et_yyhhmm = findViewById(R.id.et_yyhhmm);
 
 
         //동적퍼미션 작업
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-            int permissionResult= checkSelfPermission(Manifest.permission.ACCESS_MEDIA_LOCATION);
-            if(permissionResult== PackageManager.PERMISSION_DENIED){
-                String[] permissions= new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            int permissionResult = checkSelfPermission(Manifest.permission.ACCESS_MEDIA_LOCATION);
+            if (permissionResult == PackageManager.PERMISSION_DENIED) {
+                String[] permissions = new String[]{Manifest.permission.ACCESS_MEDIA_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE};
                 requestPermissions(permissions, 10);
-            }else{
+            } else {
                 iv.setVisibility(View.VISIBLE);
             }
         }
 
 
-        iv.setOnClickListener(new View.OnClickListener(){ // 이미지 뷰 눌러서 이미지 가져오기-107
+        iv.setOnClickListener(new View.OnClickListener() { // 이미지 뷰 눌러서 이미지 가져오기-107
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -82,54 +89,104 @@ public class NameActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-
+        loadData();
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                try {
-                    InputStream in = getContentResolver().openInputStream(data.getData());
 
-                    Bitmap img = BitmapFactory.decodeStream(in);
-                    in.close();
-
-                    iv.setImageBitmap(img);
-                } catch (Exception e) {
-
-                }
-            } else if (resultCode == RESULT_CANCELED) {
-                Toast.makeText(this, "사진 선택 취소", Toast.LENGTH_LONG).show();
-            }
-        }
-
-    }//이미지
 
     public void profileSave(View view) {// 저장 버튼
+        savdImg();
         saveData();
         start();
 
     }
 
 
-
-public void start(){//StartActivity 넘어가기
-        Intent intent= new Intent(this,StartActivity.class);
+    public void start() {//StartActivity 넘어가기
+        Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
 
-}
-public void saveData(){ // 저장 버튼 클릭 시 이미지, 이름 등 FireBase 에 저장하기
+    }
+
+    public void saveData() { // 프로필 정보 H 에 저장.
+
+        H.name = et_name.getText().toString();
+        H.ProfileMsg = et_profileMsg.getText().toString();
+        H.yyhhmm = et_yyhhmm.getText().toString();
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_CODE:
+                if (resultCode == RESULT_OK) {
+                    img = data.getData();
+                    Glide.with(NameActivity.this).load(img).into(iv);
+                }
+                break;
+        }
+
+    }
+
+    public void savdImg() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+        String fileName = sdf.format(new Date()) + ".png";
+
+        //FireBaseStorage 에 저장하기
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        final StorageReference imgRef = firebaseStorage.getReference("profileImages/" + fileName);
+
+        //파일 업로드
+        UploadTask uploadTask = imgRef.putFile(img);
+        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // 이미지 업로드가 성공되었으므로 곧 바로 FireBaseStorage 의 이미지 파일 다운로드 URL 얻어오기
+                imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        // 파라미터로 FireBase 저장소에 저장되어있는 이미지에 대한 다운로드 주소[URL]를 문자열로 얻어오기
+                        H.profileUrl = uri.toString();
+                        Toast.makeText(NameActivity.this, "프로필 저장완료", Toast.LENGTH_SHORT).show();
+
+//                        ******//1. FireBase DataBase 에 nickName,profileUrl 저장
+                        //FireBase DB 관리자 객체 소환
+                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                        //'profiles' 라는 이름의 자식노드 참조객체 얻어오기
+                        DatabaseReference profileRef = firebaseDatabase.getReference("profiles");
+
+                        //nickName 을 Key 식별자로, profileImage 주소를 값으로 저장
+                        profileRef.child(H.name).setValue(H.profileUrl);
 
 
-}
+//                        *****//2. 내 phone 에 nickName,profileUrl 저장
+
+                        SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+
+                        editor.putString("ame", H.name);
+                        editor.putString("profileUrl", H.profileUrl);
+                        editor.commit();
+
+                        //저장 완료, ChatActivity 전환
+                        Intent intent = new Intent(NameActivity.this, ChatActivity.class);
+                        startActivity(intent);
+                        finish();
 
 
+                    }
+                });
+            }
+        });
 
+    }
 
-
-
-
-
+    //내 phone 에 저장되어 있는 프로필정보 읽어오기
+    void loadData() {
+        SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
+        H.name = preferences.getString("name", null);
+        H.profileUrl = preferences.getString("profileUrl", null);
+    }
 
 }

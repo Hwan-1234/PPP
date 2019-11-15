@@ -56,46 +56,6 @@
             android:onClick="API"
             android:text="API"/>
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:layout_alignParentTop="true"
-        android:background="#44eeeeee"
-        android:layout_centerHorizontal="true"
-        >
-        <ImageView
-            android:id="@+id/myiv"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/roundedbutton"
-            />
-        <TextView
-            android:id="@+id/tvmy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:text="user"/>
-        <TextView
-            android:id="@+id/tvday"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:text="000"/>
-        <TextView
-            android:id="@+id/tva"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="A"
-            android:paddingRight="8dp"/>
-        <ImageView
-            android:id="@+id/aiv"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/roundedbutton"
-            />
-    </LinearLayout>
+
 
 </RelativeLayout>

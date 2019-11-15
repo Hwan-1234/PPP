@@ -6,9 +6,9 @@ import android.widget.ImageView;
 public class H {
     public static final int REQUEST_CODE = 0;
     public static String name;
-    public static Uri ProfileImg;
     public static String ProfileMsg;
     public static String yyhhmm;
     public static String profileUrl;
-    public static ImageView Profileiv;
+    public static String password;
+    public static String emailName;
 }

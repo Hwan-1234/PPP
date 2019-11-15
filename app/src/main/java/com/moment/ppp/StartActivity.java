@@ -40,10 +40,9 @@ import java.util.Date;
 public class StartActivity extends AppCompatActivity {
     Context context;
     static final int PICK_CONTACT_REQUEST = 1;
-    Button chat,gallery,api,user;
+    Button chat, gallery, api, user;
     ImageButton id;
-    TextView tvmy,tva,tvday;
-    ImageView myiv,aiv;
+    ImageView aiv;
     boolean isFirst = true;//앱 처음 실행?
     boolean isChanged = false;//프로필 업데이트 한 적 있?
 
@@ -51,10 +50,9 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        id=findViewById(R.id.id);
-        user=findViewById(R.id.user);
-        myiv=findViewById(R.id.myiv);
-        loadData();
+        id = findViewById(R.id.id);
+        user = findViewById(R.id.user);
+
         id.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,17 +62,19 @@ public class StartActivity extends AppCompatActivity {
                 startActivityForResult(intent, H.REQUEST_CODE);
                 int permissionCheck = ContextCompat.checkSelfPermission(StartActivity.this, Manifest.permission.WRITE_CALENDAR);
 
-                if(permissionCheck== PackageManager.PERMISSION_DENIED){
+                if (permissionCheck == PackageManager.PERMISSION_DENIED) {
 
                     // 권한 없음
-                }else{
+                } else {
                     // 권한 있음
                 }
             }
         });
 
 
-    }    @Override
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == H.REQUEST_CODE) {
@@ -98,8 +98,8 @@ public class StartActivity extends AppCompatActivity {
 
 
     public void Chat(View view) {
-        Intent intent=new Intent(this,ChatActivity.class);
-        startActivityForResult(intent,10);
+        Intent intent = new Intent(StartActivity.this, ChatActivity.class);
+        startActivityForResult(intent, 10);
 
     }
 
@@ -108,37 +108,24 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void API(View view) {
-        Intent intent=new Intent(this,ApiActivity.class);
-        startActivityForResult(intent,10);
+        Intent intent = new Intent(StartActivity.this, ApiActivity.class);
+        startActivityForResult(intent, 10);
 
     }
 
     public void Img(View view) {
 
 
-
-
-
     }
-
 
 
     public void User(View view) {
 
-        Intent intent = new Intent(this,NameActivity.class);
-        startActivityForResult(intent,10);
+        Intent intent = new Intent(StartActivity.this, NameActivity.class);
+        startActivityForResult(intent, 10);
 
 
     }
-    //내 phone 에 저장되어 있는 프로필정보 읽어오기
-    public void loadData() {
-        SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
-        H.name = preferences.getString("name", null);
-        H.profileUrl = preferences.getString("profileUrl", null);
-
-
-    }
-
 
 
 }

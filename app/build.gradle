@@ -34,6 +34,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.firebase:firebase-core:17.0.0'
     implementation 'com.google.firebase:firebase-database:19.1.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.1'
+
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'dev.dworks.libs:volleyplus:+'
 }
 apply plugin: 'com.google.gms.google-services'
