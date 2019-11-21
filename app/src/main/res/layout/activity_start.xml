@@ -11,7 +11,6 @@
 
     <ImageButton
         android:id="@+id/id"
-        android:onClick="Img"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         android:clickable="true"

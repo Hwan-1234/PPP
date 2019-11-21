@@ -104,7 +104,8 @@ public class StartActivity extends AppCompatActivity {
     }
 
     public void Gallery(View view) {
-
+        Intent intent = new Intent(StartActivity.this,GalleryActivity.class);
+        startActivity(intent);
     }
 
     public void API(View view) {
@@ -113,10 +114,6 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
-    public void Img(View view) {
-
-
-    }
 
 
     public void User(View view) {

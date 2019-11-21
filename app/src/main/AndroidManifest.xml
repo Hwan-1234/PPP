@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NameActivity"></activity>
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".NameActivity" />
         <activity android:name=".ApiActivity" />
         <activity android:name=".HttpActivity" />
         <activity android:name=".ChatActivity" />
