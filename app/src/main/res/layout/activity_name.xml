@@ -29,20 +29,20 @@
 
 
     <EditText
-        android:id="@+id/et_yyhhmm"
+        android:id="@+id/et_num"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/et_name"
         android:layout_alignParentRight="true"
-        android:maxLength="8"
-        android:hint="YYHHMM" />
+        android:maxLength="13"
+        android:hint="010-0000-0000" />
 
     <EditText
         android:id="@+id/et_ProfileMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="상태메시지"
-        android:layout_alignBottom="@id/et_yyhhmm"
+        android:layout_alignBottom="@id/et_num"
         android:layout_marginBottom="-50dp"
         android:maxLines="2"/>
 

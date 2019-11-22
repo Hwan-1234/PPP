@@ -9,9 +9,11 @@ public class H {
     public static final int REQUEST_CODE = 0;
     public static String name;
     public static String ProfileMsg;
-    public static String yyhhmm;
+    public static String num;
     public static String profileUrl;
     public static String myToken;
     public static String aToken;
 
+
 }
+

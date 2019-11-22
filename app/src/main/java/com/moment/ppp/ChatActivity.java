@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        getSupportActionBar().setTitle(H.name);
+//        getSupportActionBar().setTitle(H.name);
 
         firebasedatabase = FirebaseDatabase.getInstance();
         databaseReference = firebasedatabase.getReference();

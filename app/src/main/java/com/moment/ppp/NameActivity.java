@@ -38,8 +38,11 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -55,7 +58,7 @@ import static com.moment.ppp.H.profileUrl;
 
 public class NameActivity extends AppCompatActivity {
     public ImageView iv;
-    public EditText et_name, et_profileMsg, et_yyhhmm;
+    public EditText et_name, et_profileMsg, et_num;
     Uri img;
 
     @Override
@@ -65,7 +68,7 @@ public class NameActivity extends AppCompatActivity {
         iv = findViewById(R.id.iv);
         et_name = findViewById(R.id.et_name);
         et_profileMsg = findViewById(R.id.et_ProfileMsg);
-        et_yyhhmm = findViewById(R.id.et_yyhhmm);
+        et_num = findViewById(R.id.et_num);
 
 
         //동적퍼미션 작업
@@ -90,6 +93,7 @@ public class NameActivity extends AppCompatActivity {
             }
         });
         loadData();
+        dataSave();
     }
 
 
@@ -111,7 +115,7 @@ public class NameActivity extends AppCompatActivity {
 
         H.name = et_name.getText().toString();
         H.ProfileMsg = et_profileMsg.getText().toString();
-        H.yyhhmm = et_yyhhmm.getText().toString();
+        H.num = et_num.getText().toString();
 
     }
 
@@ -187,6 +191,34 @@ public class NameActivity extends AppCompatActivity {
         SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
         H.name = preferences.getString("name", null);
         H.profileUrl = preferences.getString("profileUrl", null);
+    }
+    //이름,전화번호 등 정보 DataBase 에 넣기
+    void dataSave(){
+        final String userName=et_name.getText().toString();
+        final String userNum=et_num.getText().toString();
+
+
+
+        final FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
+        DatabaseReference Ref=firebaseDatabase.getReference();
+        final DatabaseReference userRef=Ref.child("User");
+
+
+        userRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User setUser= new User(userName,userNum);
+                User setuser=new User();
+                userRef.setValue(setUser);
+            //TODO
+                //노드ID,NUM 추가
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }
