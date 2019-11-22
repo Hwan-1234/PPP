@@ -7,10 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -29,11 +32,25 @@ public class ChatActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference chatRef;
+    private TextView personTextA = null;
+    private TextView personTextB = null;
+    private FirebaseDatabase firebasedatabase = null;
+    private DatabaseReference databaseReference = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-//        getSupportActionBar().setTitle(H.name);
+        getSupportActionBar().setTitle(H.name);
+
+        firebasedatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebasedatabase.getReference();
+//        personTextA = findViewById(R.id.chat_texta); //나
+//        personTextB = findViewById(R.id.chat_textb); //상대
+
+
+
 
         et=findViewById(R.id.et);
         listView=findViewById(R.id.listview);
@@ -87,6 +104,15 @@ public class ChatActivity extends AppCompatActivity {
         et.setText("");
         InputMethodManager imm=(InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+        ChatMessageDto chatData = new ChatMessageDto("사용자A", et.getText().toString());  // 유저 이름과 메세지로 chatData 만들기
+        databaseReference.child("message").push().setValue(chatData);  // 기본 database 하위 message라는 child에 chatData를 list로 만들
+
+        Log.i("CHAT-TAG", et.getText().toString());
+
+        personTextA.setText(et.getText().toString());
+       et.setText("");
+
+
 
     }
 }

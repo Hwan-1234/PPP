@@ -11,7 +11,7 @@ public class H {
     public static String ProfileMsg;
     public static String yyhhmm;
     public static String profileUrl;
-    public static String password;
-    public static String emailName;
+    public static String myToken;
+    public static String aToken;
 
 }

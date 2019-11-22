@@ -38,13 +38,9 @@ import java.util.Date;
 
 
 public class StartActivity extends AppCompatActivity {
-    Context context;
-    static final int PICK_CONTACT_REQUEST = 1;
-    Button chat, gallery, api, user;
+    Button  user;
     ImageButton id;
-    ImageView aiv;
-    boolean isFirst = true;//앱 처음 실행?
-    boolean isChanged = false;//프로필 업데이트 한 적 있?
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +101,7 @@ public class StartActivity extends AppCompatActivity {
 
     public void Gallery(View view) {
         Intent intent = new Intent(StartActivity.this,GalleryActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent,10);
     }
 
     public void API(View view) {
