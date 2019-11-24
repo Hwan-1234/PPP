@@ -132,11 +132,7 @@ private void LoginSuccess(){
     Intent intent=new Intent(MainActivity.this,StartActivity.class);
     startActivity(intent);
 }
- private void loadData(){
-     SharedPreferences preferences=getSharedPreferences("account",MODE_PRIVATE);
-     H.name=preferences.getString("name",null);
-     H.profileUrl=preferences.getString("profileUrl",null);
- }
+
 
 
 }

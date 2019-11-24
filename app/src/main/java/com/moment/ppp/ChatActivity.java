@@ -62,8 +62,8 @@ public class ChatActivity extends AppCompatActivity {
         chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                msgItem msgItem=dataSnapshot.getValue(com.moment.ppp.msgItem.class);
-                msgItems.add(msgItem);
+//                msgItem msgItem=dataSnapshot.getValue(com.moment.ppp.msgItem.class);
+//                msgItems.add(msgItem);
                 adapter.notifyDataSetChanged();
                 listView.setSelection(msgItems.size()-1);
             }

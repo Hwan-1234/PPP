@@ -60,7 +60,9 @@ public class NameActivity extends AppCompatActivity {
     public ImageView iv;
     public EditText et_name, et_profileMsg, et_num;
     Uri img;
-
+    FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
+    DatabaseReference ref=firebaseDatabase.getReference();
+    DatabaseReference userRef=ref.child("User").push();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,8 +100,10 @@ public class NameActivity extends AppCompatActivity {
 
 
     public void profileSave(View view) {// 저장 버튼
-        savdImg();
         saveData();
+        dataSave();
+        savdImg();
+
         start();
 
     }
@@ -194,24 +198,14 @@ public class NameActivity extends AppCompatActivity {
     }
     //이름,전화번호 등 정보 DataBase 에 넣기
     void dataSave(){
-        final String userName=et_name.getText().toString();
-        final String userNum=et_num.getText().toString();
-
-
-
-        final FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
-        DatabaseReference Ref=firebaseDatabase.getReference();
-        final DatabaseReference userRef=Ref.child("User");
-
-
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User setUser= new User(userName,userNum);
-                User setuser=new User();
+                User setUser= new User(H.name,H.num);
                 userRef.setValue(setUser);
-            //TODO
-                //노드ID,NUM 추가
+
+
+
             }
 
             @Override
