@@ -38,6 +38,9 @@ import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,9 +63,10 @@ public class NameActivity extends AppCompatActivity {
     public ImageView iv;
     public EditText et_name, et_profileMsg, et_num;
     Uri img;
-    FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
-    DatabaseReference ref=firebaseDatabase.getReference();
-    DatabaseReference userRef=ref.child("User").push();
+    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    DatabaseReference ref = firebaseDatabase.getReference();
+    DatabaseReference userRef = ref.child("User").child("Player");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,16 +107,14 @@ public class NameActivity extends AppCompatActivity {
         saveData();
         dataSave();
         savdImg();
-
+        Toast.makeText(NameActivity.this, "프로필 저장완료", Toast.LENGTH_SHORT).show();
         start();
-
     }
 
 
     public void start() {//StartActivity 넘어가기
         Intent intent = new Intent(this, StartActivity.class);
         startActivity(intent);
-
     }
 
     public void saveData() { // 프로필 정보 H 에 저장.
@@ -122,6 +124,8 @@ public class NameActivity extends AppCompatActivity {
         H.num = et_num.getText().toString();
 
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -138,6 +142,7 @@ public class NameActivity extends AppCompatActivity {
     }
 
     public void savdImg() {
+        if (profileUrl!=null){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
         String fileName = sdf.format(new Date()) + ".png";
 
@@ -146,66 +151,45 @@ public class NameActivity extends AppCompatActivity {
         final StorageReference imgRef = firebaseStorage.getReference("profileImages/" + fileName);
 
         //파일 업로드
-        UploadTask uploadTask = imgRef.putFile(img);
-        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+          UploadTask uploadTask = imgRef.putFile(img);
+          uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // 이미지 업로드가 성공되었으므로 곧 바로 FireBaseStorage 의 이미지 파일 다운로드 URL 얻어오기
                 imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        // 파라미터로 FireBase 저장소에 저장되어있는 이미지에 대한 다운로드 주소[URL]를 문자열로 얻어오기
                         H.profileUrl = uri.toString();
-                        Toast.makeText(NameActivity.this, "프로필 저장완료", Toast.LENGTH_SHORT).show();
-
-//                        ******//1. FireBase DataBase 에 nickName,profileUrl 저장
-                        //FireBase DB 관리자 객체 소환
                         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        //'profiles' 라는 이름의 자식노드 참조객체 얻어오기
                         DatabaseReference profileRef = firebaseDatabase.getReference("profiles");
-
-                        //nickName 을 Key 식별자로, profileImage 주소를 값으로 저장
                         profileRef.child(H.name).setValue(H.profileUrl);
-
-
-//                        *****//2. 내 phone 에 nickName,profileUrl 저장
-
                         SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
-
                         editor.putString("ame", H.name);
                         editor.putString("profileUrl", H.profileUrl);
                         editor.commit();
-
-                        //저장 완료, ChatActivity 전환
                         Intent intent = new Intent(NameActivity.this, ChatActivity.class);
                         startActivity(intent);
                         finish();
-
-
                     }
                 });
             }
-        });
+        });}
 
     }
 
-    //내 phone 에 저장되어 있는 프로필정보 읽어오기
     void loadData() {
         SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
         H.name = preferences.getString("name", null);
         H.profileUrl = preferences.getString("profileUrl", null);
     }
-    //이름,전화번호 등 정보 DataBase 에 넣기
-    void dataSave(){
+
+    void dataSave() {
         userRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User setUser= new User(H.name,H.num);
+                User setUser = new User(H.name,H.num,H.ProfileMsg);
                 userRef.setValue(setUser);
-
-
-
             }
 
             @Override

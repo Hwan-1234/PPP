@@ -2,16 +2,19 @@ package com.moment.ppp;
 
 public class msgItem {
     String name,msg,time;
-    String profileImg;
+    String profileUrl;
 
-    public msgItem(String name, String message, String time) {
+    public msgItem() {
+    }
+
+    public msgItem(String name, String message) {
     }
 
     public msgItem(String name, String msg, String time, String profileImg) {
         this.name = name;
         this.msg = msg;
         this.time = time;
-        this.profileImg = profileImg;
+        this.profileUrl = profileImg;
     }
 
     public String getName() {
@@ -38,11 +41,12 @@ public class msgItem {
         this.time = time;
     }
 
-    public String getProfileImg() {
-        return profileImg;
+    public String getProfileUrl() {
+        return profileUrl;
     }
 
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+    public void gettProfileUrl(String profileImg) {
+        this.profileUrl = profileImg;
     }
+
 }

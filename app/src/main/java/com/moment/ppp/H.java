@@ -11,9 +11,7 @@ public class H {
     public static String ProfileMsg;
     public static String num;
     public static String profileUrl;
-    public static String myToken;
-    public static String aToken;
-
+    public static String aName;
 
 }
 

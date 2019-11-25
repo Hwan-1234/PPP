@@ -17,7 +17,6 @@
         <activity android:name=".GalleryActivity" />
         <activity android:name=".NameActivity" />
         <activity android:name=".ApiActivity" />
-        <activity android:name=".HttpActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".StartActivity" />
         <activity android:name=".MainActivity">

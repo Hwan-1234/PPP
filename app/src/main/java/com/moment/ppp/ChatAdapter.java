@@ -1,5 +1,6 @@
 package com.moment.ppp;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,11 @@ public class ChatAdapter extends BaseAdapter {
         View itemView=null;//재활용할 뷰는 사용하지 않음.
 
         //메세지가 내 메세지인지?
-        if (item.getName().equals(H.name)){
+//        Log.e("Tag", String.valueOf(item.getName().equals(H.name)));
+//        Log.e("Tag", item.getName());
+//        Log.e("Tag", H.name);
+
+        if ((item.getName()).equals(H.name)){
             itemView=layoutInflater.inflate(R.layout.my_msgbox,viewGroup,false);
         }else{
             itemView=layoutInflater.inflate(R.layout.a_msgbox,viewGroup,false);
@@ -56,16 +61,23 @@ public class ChatAdapter extends BaseAdapter {
 
         //만들어진 itemView 에 값 설정
         CircleImageView iv=itemView.findViewById(R.id.iv);
-        TextView tvName=iv.findViewById(R.id.tv_name);
-        TextView tvMsg=iv.findViewById(R.id.tv_msg);
-        TextView tvTime=iv.findViewById(R.id.tv_time);
+        TextView tvName=itemView.findViewById(R.id.tv_name);
+        TextView tvMsg=itemView.findViewById(R.id.tv_msg);
+        TextView tvTime=itemView.findViewById(R.id.tv_time);
 
         tvName.setText(item.getName());
         tvMsg.setText(item.getMsg());
         tvTime.setText(item.getTime());
+//        Log.e("Tag",item.getName());
+//        Log.e("Tag",item.getMsg());
+//        Log.e("Tag",item.getTime());
 
 
-        Glide.with(itemView).load(item+"."+H.profileUrl).into(iv);
+
+
+
+
+        Glide.with(itemView).load(item.getProfileUrl()).into(iv);
 
         return itemView;
     }
