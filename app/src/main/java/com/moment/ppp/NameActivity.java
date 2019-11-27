@@ -98,12 +98,11 @@ public class NameActivity extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-        loadData();
-        dataSave();
     }
 
 
     public void profileSave(View view) {// 저장 버튼
+        loadData();
         saveData();
         dataSave();
         savdImg();
@@ -168,8 +167,6 @@ public class NameActivity extends AppCompatActivity {
                         editor.putString("ame", H.name);
                         editor.putString("profileUrl", H.profileUrl);
                         editor.commit();
-                        Intent intent = new Intent(NameActivity.this, ChatActivity.class);
-                        startActivity(intent);
                         finish();
                     }
                 });
