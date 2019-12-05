@@ -45,8 +45,7 @@ public class msgItem {
         return profileUrl;
     }
 
-    public void gettProfileUrl(String profileImg) {
-        this.profileUrl = profileImg;
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
-
 }

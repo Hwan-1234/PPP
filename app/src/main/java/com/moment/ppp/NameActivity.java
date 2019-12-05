@@ -103,18 +103,14 @@ public class NameActivity extends AppCompatActivity {
 
     public void profileSave(View view) {// 저장 버튼
         loadData();
+
         saveData();
+
         dataSave();
         savdImg();
         Toast.makeText(NameActivity.this, "프로필 저장완료", Toast.LENGTH_SHORT).show();
-        start();
     }
 
-
-    public void start() {//StartActivity 넘어가기
-        Intent intent = new Intent(this, StartActivity.class);
-        startActivity(intent);
-    }
 
     public void saveData() { // 프로필 정보 H 에 저장.
 
@@ -123,7 +119,6 @@ public class NameActivity extends AppCompatActivity {
         H.num = et_num.getText().toString();
 
     }
-
 
 
     @Override
@@ -141,37 +136,38 @@ public class NameActivity extends AppCompatActivity {
     }
 
     public void savdImg() {
-        if (profileUrl!=null){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
-        String fileName = sdf.format(new Date()) + ".png";
+        if (profileUrl != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
+            String fileName = sdf.format(new Date()) + ".png";
 
-        //FireBaseStorage 에 저장하기
-        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        final StorageReference imgRef = firebaseStorage.getReference("profileImages/" + fileName);
+            //FireBaseStorage 에 저장하기
+            FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+            final StorageReference imgRef = firebaseStorage.getReference("profileImages/" + fileName);
 
-        //파일 업로드
+            //파일 업로드
 
-          UploadTask uploadTask = imgRef.putFile(img);
-          uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        H.profileUrl = uri.toString();
-                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-                        DatabaseReference profileRef = firebaseDatabase.getReference("profiles");
-                        profileRef.child(H.name).setValue(H.profileUrl);
-                        SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = preferences.edit();
-                        editor.putString("ame", H.name);
-                        editor.putString("profileUrl", H.profileUrl);
-                        editor.commit();
-                        finish();
-                    }
-                });
-            }
-        });}
+            UploadTask uploadTask = imgRef.putFile(img);
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imgRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            H.profileUrl = uri.toString();
+                            FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                            DatabaseReference profileRef = firebaseDatabase.getReference("profiles");
+                            profileRef.child(H.name).setValue(H.profileUrl);
+                            SharedPreferences preferences = getSharedPreferences("account", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("ame", H.name);
+                            editor.putString("profileUrl", H.profileUrl);
+                            editor.commit();
+                            finish();
+                        }
+                    });
+                }
+            });
+        }
 
     }
 
@@ -182,18 +178,10 @@ public class NameActivity extends AppCompatActivity {
     }
 
     void dataSave() {
-        userRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User setUser = new User(H.name,H.num,H.ProfileMsg);
-                userRef.setValue(setUser);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        User setUser = new User(H.name, H.num, H.ProfileMsg);
+        userRef.setValue(setUser);
 
-            }
-        });
     }
 
 }

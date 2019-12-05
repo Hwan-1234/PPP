@@ -49,28 +49,7 @@ public class ChatActivity extends AppCompatActivity {
         chatView = findViewById(R.id.listview);
         adapter = new ChatAdapter(msgItems, getLayoutInflater());
         chatView.setAdapter(adapter);
-        loadUser();
-
-
-
-    }
-
-    public void clickSend(View view) {
-        String name = H.name;// 프로필 불러와서 채팅창 표시
-        String message = et.getText().toString();
-        String profileUrl = H.profileUrl;
-
-        Calendar calendar = Calendar.getInstance();//시간 설정
-        String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
-
-        msgItem msgItem = new msgItem(name, message, time, profileUrl);
-        chatRef.push().setValue(msgItem);
-        et.setText("");
-
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-
+//        loadUser();
         chatRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -100,11 +79,32 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
-private void loadUser(){
-    SharedPreferences preferences= getSharedPreferences("account", MODE_PRIVATE);
-    H.name= preferences.getString("name", null);
-    H.profileUrl= preferences.getString("profileUrl", null);
-}
+
+    public void clickSend(View view) {
+        String name = H.name;// 프로필 불러와서 채팅창 표시
+        String message = et.getText().toString();
+        String profileUrl = H.profileUrl;
+
+        Calendar calendar = Calendar.getInstance();//시간 설정
+        String time = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
+
+        msgItem msgItem = new msgItem(name, message, time, profileUrl);
+        chatRef.push().setValue(msgItem);
+        et.setText("");
+
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
+
+    }
+//private void loadUser(){
+//    SharedPreferences preferences= getSharedPreferences("account", MODE_PRIVATE);
+//    H.name= preferences.getString("name", null);
+//    H.profileUrl= preferences.getString("profileUrl", null);
+//}
 
 }
