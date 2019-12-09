@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "603058401302-18r60te34ahimti3n90bme5j8j95cuu0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moment.ppp",
+            "certificate_hash": "539e3274f63b1979aede2b83fe62336c932351ff"
+          }
+        },
+        {
+          "client_id": "603058401302-eobnaeggramdr4d1vd849mb51gs7o4o3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moment.ppp",
+            "certificate_hash": "033afa4834818aa3f0c648475b702f0d3bc87a1c"
+          }
+        },
+        {
+          "client_id": "603058401302-k6rtrkk8tl3pvv7c38gn7qae9k94q9cn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.moment.ppp",
+            "certificate_hash": "f2c103d042f5932c2257e7b7d5c090dc7a747489"
+          }
+        },
+        {
           "client_id": "603058401302-ag581eggo88d44ab2eof3gvcog61b2i4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -65,7 +65,7 @@ public class NameActivity extends AppCompatActivity {
     Uri img;
     FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     DatabaseReference ref = firebaseDatabase.getReference();
-    DatabaseReference userRef = ref.child("User").child("Player");
+    DatabaseReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +103,7 @@ public class NameActivity extends AppCompatActivity {
 
     public void profileSave(View view) {// 저장 버튼
         loadData();
-
         saveData();
-
         dataSave();
         savdImg();
         Toast.makeText(NameActivity.this, "프로필 저장완료", Toast.LENGTH_SHORT).show();
@@ -117,6 +115,7 @@ public class NameActivity extends AppCompatActivity {
         H.name = et_name.getText().toString();
         H.ProfileMsg = et_profileMsg.getText().toString();
         H.num = et_num.getText().toString();
+        userRef=ref.child(H.name);
 
     }
 
@@ -136,7 +135,7 @@ public class NameActivity extends AppCompatActivity {
     }
 
     public void savdImg() {
-        if (profileUrl != null) {
+        if (img != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
             String fileName = sdf.format(new Date()) + ".png";
 

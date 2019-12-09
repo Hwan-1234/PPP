@@ -49,9 +49,7 @@ public class ChatAdapter extends BaseAdapter {
         View itemView=null;//재활용할 뷰는 사용하지 않음.
 
         //메세지가 내 메세지인지?
-//        Log.e("Tag", String.valueOf(item.getName().equals(H.name)));
-//        Log.e("Tag", item.getName());
-//        Log.e("Tag", H.name);
+
 
         if ((item.getName()).equals(H.name)){
             itemView=layoutInflater.inflate(R.layout.my_msgbox,viewGroup,false);
