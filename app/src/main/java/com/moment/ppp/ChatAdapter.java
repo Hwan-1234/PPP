@@ -51,7 +51,7 @@ public class ChatAdapter extends BaseAdapter {
         //메세지가 내 메세지인지?
 
 
-        if ((item.getName()).equals(H.name)){
+        if ((item.getName())==H.name){
             itemView=layoutInflater.inflate(R.layout.my_msgbox,viewGroup,false);
         }else{
             itemView=layoutInflater.inflate(R.layout.a_msgbox,viewGroup,false);
@@ -69,12 +69,6 @@ public class ChatAdapter extends BaseAdapter {
 //        Log.e("Tag",item.getName());
 //        Log.e("Tag",item.getMsg());
 //        Log.e("Tag",item.getTime());
-
-
-
-
-
-
         Glide.with(itemView).load(item.getProfileUrl()).into(iv);
 
         return itemView;
