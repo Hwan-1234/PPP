@@ -163,8 +163,11 @@ public class NameActivity extends AppCompatActivity {
                             editor.commit();
                             finish();
                         }
+
                     });
                 }
+
+
             });
         }
 
